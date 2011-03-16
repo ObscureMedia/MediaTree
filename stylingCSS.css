@@ -34,12 +34,8 @@ body {
 
 }
 
-<<<<<<< HEAD
 #topnav li, #navigation li, #footer li, #contentDisplay li{
-=======
 /*formats the content of topnav, navigation, content and footer identically*/
-#topnav li, #navigation li, #footer li{
->>>>>>> 69d2bad4f9d55aa9dc9e61e42d1ad0d24d679389
 	display:block;
 	padding: 5px, 5px, 5px, 5px;
 	float:left;	
