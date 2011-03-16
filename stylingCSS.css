@@ -1,0 +1,50 @@
+@CHARSET "ISO-8859-1";
+/* The entire header, conprising of both levels of navigation */
+#header {
+	display:block;
+	padding-left:400px;
+	float:left;	
+}
+
+/* Each item in the header, the topnav and navigation */
+#header li{
+	padding:10px;
+	margin:0;
+}
+
+/* The topnav bar, containing the logo, search bar and basket */
+#topnav {
+
+}
+
+/*each item in the topnav bar.*/
+#topnav li{
+	display:block;
+	padding: 5px, 5px, 5px, 5px;
+	float:left;	
+	}
+
+/*The navigation bar, containing the catagories and user navigation*/
+#navigation {
+
+}
+
+/*each item in the navigation bar*/
+#navigation li {
+	display:block;
+	padding: 5px, 5px, 5px, 5px;
+	float:left;	
+}	
+
+/*page footer*/
+#footer {
+	margin:0px;
+	float:right;
+}
+
+/*each item in the page footer	*/
+#footer li{
+	display:block;
+	padding: 5px, 5px, 5px, 5px;
+	float:left;		
+	}
