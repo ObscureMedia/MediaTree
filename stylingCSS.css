@@ -6,6 +6,13 @@
 	float:left;	
 
 }
+/*formats the content of topnav, navigation, content and footer identically*/
+
+#topnav li, #navigation li, #footer li{
+	display:block;
+	padding: 5px, 5px, 5px, 5px;
+	float:left;	
+}
 
 /* Each item in the header, the topnav and navigation */
 #header li{
@@ -13,34 +20,11 @@
 	margin:0;
 }
 
-/* The topnav bar, containing the logo, search bar and basket */
-#topnav {
-}
-
-/*each item in the topnav bar.*/
-#topnav li{
-	display:block;
-	padding: 5px, 5px, 5px, 5px;
-	float:left;	
-	}
-
-/*The navigation bar, containing the catagories and user navigation*/
-#navigation {	
-}
-
-/*each item in the navigation bar*/
-#navigation li {
-	display:block;
-	padding: 5px, 5px, 5px, 5px;
-	float:left;	
-}	
-
 /*page footer*/
 #footer {
 	display:block;
 	float:right;
-	width:100%
-	
+	width:100%	
 }
 
 #footerwrapper {
@@ -49,6 +33,5 @@ padding-left:30%;
 
 /*each item in the page footer	*/
 #footer li{
-	display:block;
-	float:left;	
+	padding-left:10px
 	}
