@@ -1,16 +1,9 @@
 @CHARSET "ISO-8859-1";
 /*Set the background*/
 body {
-		background-image: -webkit-gradient(
-	    linear,
-	    left bottom,
-	    left top,
-	    color-stop(0.27, rgb(255,255,255)),
-	    color-stop(0.64, rgb(163,102,196)),
-	    color-stop(0.81, rgb(155,46,209)),
-	    color-stop(0.88, rgb(134,0,212)),
-	    color-stop(0.88, rgb(255,255,255))
-	);
+background-color: 9B2ED1;
+background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(.5, rgb(134,0,212)), color-stop(.5, transparent), to(transparent));
+
 
 	background-image: -moz-linear-gradient(
 	    center bottom,
@@ -20,10 +13,9 @@ body {
 	    rgb(134,0,212) 88%,
 	    rgb(255,255,255) 88%
 	);
-	 background-repeat: no-repeat;
-	 height: 100%;
-   	 margin: 0;
-	
+-webkit-background-size: 50px 50px;
+-moz-background-size: 50px 50px;
+background-size: 50px 50px;
 }
 
 /* The entire header, conprising of both levels of navigation */
