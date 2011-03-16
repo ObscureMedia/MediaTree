@@ -2,9 +2,8 @@
 /* The entire header, conprising of both levels of navigation */
 #header {
 	display:block;
-	padding-left:10%;
+	padding-left:400px;
 	float:left;	
-
 }
 
 /* Each item in the header, the topnav and navigation */
@@ -15,6 +14,7 @@
 
 /* The topnav bar, containing the logo, search bar and basket */
 #topnav {
+
 }
 
 /*each item in the topnav bar.*/
@@ -25,7 +25,8 @@
 	}
 
 /*The navigation bar, containing the catagories and user navigation*/
-#navigation {	
+#navigation {
+
 }
 
 /*each item in the navigation bar*/
@@ -35,20 +36,22 @@
 	float:left;	
 }	
 
-/*page footer*/
-#footer {
-	display:block;
-	float:right;
-	width:100%
-	
+#contentDisplay{
+
+
 }
 
-#footerwrapper {
-padding-left:30%;
-}	
+
+
+/*page footer*/
+#footer {
+	margin:0px;
+	float:right;
+}
 
 /*each item in the page footer	*/
 #footer li{
 	display:block;
-	float:left;	
+	padding: 5px, 5px, 5px, 5px;
+	float:left;		
 	}
