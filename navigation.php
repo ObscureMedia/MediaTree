@@ -8,5 +8,11 @@
 		<li>DVD</li>	
 		<li>Basket</li>
 		<li>Login</li>
+		<li>DVD</li>	
+		<li>Basket</li>
+		<li>DVD</li>	
+		<li>Basket</li>
+		<li>Login</li>
+		<li>Login</li>
 	</ul>
 </div>
