@@ -4,10 +4,10 @@
 <div id="topnav">
 	<ul>
 		<li>
-			<img src="Content/logo.png">
+			<img id ="obscurelogo" src="vinyl disk.png">
 		</li>	
 		<li>
-
+			<p>bscureMedia</p>
 		</li>
 		
 		<li>

@@ -1,20 +1,20 @@
 @CHARSET "ISO-8859-1";
-/*Set the background*/
+/*Set the background colour a darker purple with a transparent/lighter purple graident. Backgroudn is set to not move using background-attachement: fixed*/
 body {
-background-color: 9B2ED1;
-background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(.5, rgb(134,0,212)), color-stop(.5, transparent), to(transparent));
-
+background-color: 8d279f;
+background-image: -webkit-gradient(
+	    linear,
+	    left bottom,
+	    left top,
+	    color-stop(0, rgb(74,8,90)),
+	    color-stop(0.76, transparent)
+	);
 	background-image: -moz-linear-gradient(
 	    center bottom,
-	    rgb(255,255,255) 27%,
-	    rgb(163,102,196) 64%,
-	    rgb(155,46,209) 81%,
-	    rgb(134,0,212) 88%,
-	    rgb(255,255,255) 88%
+	    rgb(74,8,90) 0%,
+	    rgba(0,0,0,0) 76%
 	);
--webkit-background-size: 50px 50px;
--moz-background-size: 50px 50px;
-background-size: 50px 50px;
+background-attachment:fixed;
 }
 
 /* The entire header, conprising of both levels of navigation */
@@ -22,12 +22,10 @@ background-size: 50px 50px;
 	display:block;
 	margin-left:15.1%;
 	float:left;	
-	background-color: FFFFFF;
+	background-color: 8d279f;
 	width:70%;
 	margin-left:15.1%;
 	margin-right:15.1%;	
-
-
 }
 
 /*formats the content of topnav, navigation, content and footer identically*/
@@ -37,27 +35,64 @@ background-size: 50px 50px;
 	
 }
 /*declares the font for use in the menu*/
-@font-face { 
-	font-family: Delicious; 
-	font-weight: bold;
-	src: url('Delicious-Roman.otf');
-	} 
-	
-#navigation, #topnav {
-overflow:auto;
-
-}	
-#navigation li {
-	font-family: Delicious, sans-serif;
-	color: #FFFFFF;
-	font-size: 24px;
-	text-shadow: 2px 2px 2px #000;
-	}
-	
-/* Each item in the header. The topnav and navigation */
-#header li{
-	margin:0 10px 5px 0;
+@font-face {
+    font-family: HelveticaRounded;
+    src: url('HelveticaRoundedLTStd-bdcn.otf');
+    font-style: normal;
 }
+	
+#topnav {
+	overflow:hidden;
+	height:75px;
+}
+
+#topNav p {
+	font-family: HelveticaRounded, sans-serif;
+	color: #efbef7;
+	font-size: 52px;
+	position:absolute;
+	z-index:2;
+	margin-left:125px;
+	margin-top:5px;
+}
+
+#obscurelogo{
+	width:300px;
+	margin-left:-75px;
+	margin-top:-110px;
+	margin-bottom:0;
+	position:absolute;
+	z-index:1;
+}
+
+#navigation {
+	background-color:efbef7;
+	height:75px;
+	padding-left:25%;	
+	border:1px solid #8d279f;
+	-webkit-box-shadow: 0 1em 1em #191919;
+	box-shadow: 0 1em 1em #191919;
+	-moz-box-shadow: 0 1em 1em #191919;
+	border-top-right-radius: 15px;
+	-moz-border-radius-topright: 15px;
+
+
+}
+
+#navigation li {
+	font-family: HelveticaRounded, sans-serif;
+	color: #8d279f;
+	font-size: 24px;
+	border:1px solid #8d279f;
+	border-top-width:0px;
+	border-bottom-width:0px;
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-top:24.5px;
+	padding-bottom:24.5px;
+	margin-top:-17px;
+	margin-left:-1px;
+	}
 
 #content{
 	display:block;
@@ -68,9 +103,13 @@ overflow:auto;
 	overflow:auto;
 	float:right;
 	background-color: FFFFFF;
-	-webkit-box-shadow: 0px 0px 2em #191919;
-	box-shadow: 0px 0px 2em #191919;
-	-moz-box-shadow: 0px 0px 2em #191919;
+	-webkit-box-shadow: 0px 10px 1em #191919;
+	box-shadow: 0px 10px 1em #191919;
+	-moz-box-shadow: 0px 10px 1em #191919;
+	border-bottom-right-radius: 15px;
+	border-bottom-left-radius: 15px;
+	-moz-border-radius-bottomright: 15px;
+	-moz-border-radius-bottomleft: 15px;
 }
 
 /*page footer*/
