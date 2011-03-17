@@ -24,8 +24,8 @@ background-attachment:fixed;
 	float:left;	
 	background-color: 8d279f;
 	width:70%;
-	margin-left:15.1%;
-	margin-right:15.1%;	
+	margin-left:15%;
+	margin-right:15%;	
 }
 
 /*formats the content of topnav, navigation, content and footer identically*/
@@ -98,7 +98,6 @@ background-attachment:fixed;
 	display:block;
 	height:100%;
 	width:70%;
-	margin-left:15%;
 	margin-right:15%;
 	overflow:auto;
 	float:right;
@@ -120,10 +119,20 @@ background-attachment:fixed;
 }
 
 #footerwrapper {
-padding-left:30%;
+margin-left:10%;
+margin-bottom: 100px;
 }	
 
 /*each item in the page footer	*/
 #footer li{
-	padding-left:10px
+	padding-left:50px;
+	font-family: HelveticaRounded, sans-serif;
+	color: #FFFFFF;
+	font-size: 24px;
+}
+
+#copyright {
+float:left;
+margin:0;
+width:50%;
 }
