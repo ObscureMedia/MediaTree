@@ -1,0 +1,3 @@
+RewriteEngine On                          # activate mod_rewrite
+
+RewriteRule /products/([0-9]+) /product.php?id=$1
