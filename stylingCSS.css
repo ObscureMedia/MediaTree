@@ -1,50 +1,97 @@
 @CHARSET "ISO-8859-1";
+/*Set the background*/
+body {
+		background-image: -webkit-gradient(
+	    linear,
+	    left bottom,
+	    left top,
+	    color-stop(0.27, rgb(255,255,255)),
+	    color-stop(0.64, rgb(163,102,196)),
+	    color-stop(0.81, rgb(155,46,209)),
+	    color-stop(0.88, rgb(134,0,212)),
+	    color-stop(0.88, rgb(255,255,255))
+	);
+
+	background-image: -moz-linear-gradient(
+	    center bottom,
+	    rgb(255,255,255) 27%,
+	    rgb(163,102,196) 64%,
+	    rgb(155,46,209) 81%,
+	    rgb(134,0,212) 88%,
+	    rgb(255,255,255) 88%
+	);
+	 background-repeat: no-repeat;
+	 height: 100%;
+   	 margin: 0;
+	
+}
+
 /* The entire header, conprising of both levels of navigation */
 #header {
 	display:block;
-	padding-left:400px;
+	padding-left:10%;
 	float:left;	
+
 }
 
+#topnav li, #navigation li, #footer li, #contentDisplay li{
+/*formats the content of topnav, navigation, content and footer identically*/
+	display:block;
+	padding: 5px, 5px, 5px, 5px;
+	float:left;	
+	
+}
+/*declares the font for use in the menu*/
+@font-face { 
+	font-family: Delicious; 
+	font-weight: bold;
+	src: url('Delicious-Roman.otf');
+	} 
+	
+#navigation li {
+	font-family: Delicious, sans-serif;
+	color: #FFFFFF;
+	font-size: 24px;
+	text-shadow: 2px 2px 2px #000;
+	}
+	
 /* Each item in the header, the topnav and navigation */
 #header li{
 	padding:10px;
 	margin:0;
 }
 
-/* The topnav bar, containing the logo, search bar and basket */
-#topnav {
-
+#contentDisplay{
+	display:block;
+	border:1px solid red;
+	width:100%;
+	height:300px;
+	float:left;
+	margin:0 auto;
+}
+#contentWrapper ul{
+	display:block;
+	width:80%;
+	margin:10px;
 }
 
-/*each item in the topnav bar.*/
-#topnav li{
-	display:block;
-	padding: 5px, 5px, 5px, 5px;
-	float:left;	
-	}
-
-/*The navigation bar, containing the catagories and user navigation*/
-#navigation {
-
+#contentWrapper li{
+	margin-left:10px;
+	width: 10%;
 }
-
-/*each item in the navigation bar*/
-#navigation li {
-	display:block;
-	padding: 5px, 5px, 5px, 5px;
-	float:left;	
-}	
 
 /*page footer*/
 #footer {
-	margin:0px;
+	display:block;
 	float:right;
+	width:100%	
 }
+
+#footerwrapper {
+padding-left:30%;
+}	
 
 /*each item in the page footer	*/
 #footer li{
-	display:block;
-	padding: 5px, 5px, 5px, 5px;
-	float:left;		
+	padding-left:10px
 	}

@@ -1,9 +1,9 @@
 <?php
 ?>
 
-<div id="header">.
+<div id="header">
 
-<?php include "topNavigation.php"?>
-<?php include "navigation.php";?>
+	<?php include "topNavigation.php"?>
+	<?php include "navigation.php";?>
 
 </div>
