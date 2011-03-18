@@ -8,5 +8,6 @@
 		<li>DVD</li>	
 		<li>Basket</li>
 		<li>Login</li>
+		<li class ="rightalign">User Account</li>
 	</ul>
 </div>
