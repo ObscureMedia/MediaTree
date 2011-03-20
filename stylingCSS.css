@@ -9,15 +9,13 @@ background-image: -webkit-gradient(
 	    color-stop(0, rgb(74,8,90)),
 	    color-stop(0.76, transparent)
 	);
-
 	background-image: -moz-linear-gradient(
 	    center bottom,
 	    rgb(74,8,90) 0%,
 	    rgba(0,0,0,0) 76%
 	);
 background-attachment:fixed;
-<<<<<<< .minebackground-size: 50px 50px;
-=======>>>>>>> .theirs}
+}
 
 
 /* The entire header, conprising of both levels of navigation */
@@ -48,6 +46,7 @@ color: #cd88d8;
 
 
 /*formats the content of topnav, navigation, content and footer identically*/
+#topnav li, #navigation li, #footer li{
 	display:block;
 	float:left;	
 
