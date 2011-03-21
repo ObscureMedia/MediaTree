@@ -11,12 +11,35 @@ include ('mysql_connect.php');
 Class CustomerManipulation {
 
 	var $customerID;
+	var $oldValues = array();
+	var $newValues = array();
 	
 	/* Provides the functionality to edit or remove a customer from the database. 
 	 * 
 	 * */
-	public function editCustomers($oldValues, $newValues){
+	public function editCustomers($newValues){	
+		$udata 	= 		$newValues['u_id'];
+		$forename 	= 	$newValues['forename']; 	
+		$surname 	= 	$newValues['surname'];	
+		$phoneNo	=	$newValues['phoneNo'];
+
+		//echo "<script type='text/javascript'>alert($forename)</script>";
 		
+		if(!$forename){
+			$forename 	=	$_SESSION['forename'];
+		}
+		
+		if(!$surname){
+			$surname	=	$_SESSION['surname'];
+		}
+		
+		if(!$phoneNo){
+			$phoneNo	=	$_SESSION['phoneNo'];
+		}
+		
+		$sqlUpdateQry = "UPDATE USER SET U_FIRST_NAME = '$forename', U_SURNAME= '$surname', U_PHONE_NO= '$phoneNo'  WHERE U_ID = '$udata'";	
+		mysql_query($sqlUpdateQry) or die(mysql_error());
+		$_SESSION['EditConfirm']=True;
 	}
 	
 	/* Provides the functionality to view a single customer, or, to view a range of customers 
@@ -96,6 +119,22 @@ Class CustomerManipulation {
 	
 	public function getCustomer(){
 		return $this->customerID;
+	}
+	public function getOldValues(){
+		return $this->oldValues;
+	}
+	
+	public function setOldValues($field, $value){
+		$this->oldValues[$field] = $value;
+		$_SESSION[$field]= $value;
+	}
+	
+	public function setNewValues($field, $value){
+		$this->newValues[$field] = $value;
+	}
+	
+	public function getNewValues(){
+		return $this->newValues;
 	}
 }
 
