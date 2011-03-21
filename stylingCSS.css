@@ -54,7 +54,7 @@ color: #cd88d8;
 /*declares the font for use in the menu*/
 @font-face {
     font-family: HelveticaRounded;
-    src: url('HelveticaRoundedLTStd-bdcn.otf');
+    src: url('HelveticaRoundedLTStd-BdCn.otf');
     font-style: normal;
 	letter-spacing:1.4em;
 }

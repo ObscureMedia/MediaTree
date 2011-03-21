@@ -4,7 +4,7 @@
 <div id="topnav">
 	<ul>
 		<li>
-			<img id ="obscurelogo" src="vinyl disk.png">
+			<img id ="obscurelogo" src="Vinyl_Disk.png">
 		</li>	
 		<li>
 			<p id="logotext">bscureMedia</p>

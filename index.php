@@ -2,9 +2,7 @@
 
 ?>
 <html>
-	<head>
-		<link href="stylingCSS.css" rel="stylesheet" type="text/css"> 
-	</head>
+	<?php include "cssImport.php"?>
 	<body>
 	
 			<?php 
