@@ -50,7 +50,7 @@
 						<label for="Forename">Forename</label><input type="text" id="Forename" name="Forename" value="<?php echo $oldValues['forename'];?>"/>
 						<label for="Surname">Surname</label><input type="text" id="Surname" name="Surname" value="<?php echo $oldValues['surname'];?>"/>
 						<label for="Phone">Phone #</label><input type="text" id="PhoneNum" name="PhoneNum" value="<?php echo $oldValues['phoneNo'];?>"/>
-						<?php if ($_SESSION['U_TYPE']== "admin"){echo "<label for='delete'>Delete User</label> <input type='checkbox' value='true' name='deleteUser'/>";}?>																		
+						<?php if ($_SESSION['userType']== "admin"){echo "<label for='delete'>Delete User</label> <input type='checkbox' value='true' name='deleteUser'/>";}?>																		
 						<input type="submit" id="update" name="submit"/>
 					</form>		
 				
