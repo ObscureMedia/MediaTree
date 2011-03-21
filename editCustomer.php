@@ -1,9 +1,11 @@
 <?php 
 	include ('customerManipulation.php');
 	
-	/* Initiate the variables. We'll use this for storing and passing to the object.
-	 * 
-	 * */
+	/** Initiate the variables. We'll use this for storing and passing to the classes. 
+	 *	
+	 *	@author 	James Bach
+	 *	@version	0.90 
+	 */
 	
 	$customerManipulation = new CustomerManipulation();
 	$error_message	=	array();
