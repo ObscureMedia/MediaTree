@@ -25,12 +25,18 @@ Class CustomerManipulation {
 
 		//echo "<script type='text/javascript'>alert($forename)</script>";
 		
+		//	Data entry protection. If there are no values
+		//	added into the textboxes, revert the data
+		//	back to what it was via the Session reference.
 		if(!$forename){
 			$forename 	=	$_SESSION['forename'];
+			//Reference for the error-Session.
+			$error[entry]	=	"You must enter a forename";
 		}
 		
 		if(!$surname){
 			$surname	=	$_SESSION['surname'];
+			$error[entry]	=	"You must enter a surname";
 		}
 		
 		if(!$phoneNo){
@@ -40,6 +46,11 @@ Class CustomerManipulation {
 		$sqlUpdateQry = "UPDATE USER SET U_FIRST_NAME = '$forename', U_SURNAME= '$surname', U_PHONE_NO= '$phoneNo'  WHERE U_ID = '$udata'";	
 		mysql_query($sqlUpdateQry) or die(mysql_error());
 		$_SESSION['EditConfirm']=True;
+		//Unset the sessions, destroy the data in them for neatness.
+		unset($_SESSION['forname']);
+		unset($_SESSION['surname']);
+		unset($_SESSION['phoneNo']);
+		
 	}
 	
 	/* Provides the functionality to view a single customer, or, to view a range of customers 
