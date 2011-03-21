@@ -11,11 +11,12 @@ include ('mysql_connect.php');
 Class CustomerManipulation {
 
 	var $customerID;
+	
+	/* Provides the functionality to edit or remove a customer from the database. 
+	 * 
+	 * */
 	public function editCustomers($oldValues, $newValues){
-
-		foreach($oldValues as $key){
-			echo $key;
-		}
+		
 	}
 	
 	/* Provides the functionality to view a single customer, or, to view a range of customers 

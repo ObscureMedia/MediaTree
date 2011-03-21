@@ -2,11 +2,16 @@
 	include ('customerManipulation.php');
 	
 	$customerManipulation = new CustomerManipulation();
+	
+	Session_Start();
 	$error_message	=	array();
 	$oldValues		=	array();
 	$newValues		=	array();
 	if(isset($_POST['submit'])){
-	
+		if(isset($_POST['deteUser'])){
+			$sqlDeleteQry = "UPDATE USER SET U_FIRST_NAME = '$forename', U_SURNAME= '$surname', U_PHONE_NO= '$phoneNum'
+									 WHERE U_ID = '$uname' ";	
+		}
 //		$newValues['forename'] 	= $_POST['Forename'];
 //		$newValues['surname']	= $_POST['Surname'];
 //		$newValues['phoneNo']	= $_POST['PhoneNum'];
@@ -34,7 +39,6 @@
 <<html>
 	<?php include "cssImport.php"?>
 	<body>
-	
 			<?php 
 			include "header.php";
 			?>
@@ -45,9 +49,10 @@
 						<input type="hidden" name="userID" id="userID" value="<?php echo $row['U_ID'];?>" />
 						<label for="Forename">Forename</label><input type="text" id="Forename" name="Forename" value="<?php echo $oldValues['forename'];?>"/>
 						<label for="Surname">Surname</label><input type="text" id="Surname" name="Surname" value="<?php echo $oldValues['surname'];?>"/>
-						<label for="Phone">Phone #</label><input type="text" id="PhoneNum" name="PhoneNum" value="<?php echo $oldValues['phoneNo'];?>"/>																		
+						<label for="Phone">Phone #</label><input type="text" id="PhoneNum" name="PhoneNum" value="<?php echo $oldValues['phoneNo'];?>"/>
+						<?php if ($_SESSION['U_TYPE']== "admin"){echo "<label for='delete'>Delete User</label> <input type='checkbox' value='true' name='deleteUser'/>";}?>																		
 						<input type="submit" id="update" name="submit"/>
-					</form>					
+					</form>		
 				
 				</div>
 			</div>
