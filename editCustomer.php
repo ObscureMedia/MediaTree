@@ -1,27 +1,8 @@
 <?php 
 include ('mysql_connect.php');
+include ('includes/function_cleaner.php');
 	 
-	/**
-	 * A method to enture that any data POST-ed does
-	 * not have any spaces.
-	 * 
-	 * @return True
-	 * 	will return true if there are spaces.
-	 *  False will return false if there are no spaces.
-	 * @author James Bach (i7983164)
-	 * @version 1
-	 */
 
-	function exploder($value){
-    $exploder   =   explode(" ",$value);
-    if(count($exploder)>1){
-      //  Exploder has found something, return true
-      //  to say that it has   
-		return $exploder;
-    }
-    //else, return false.
-    return false;
-	}
 	
 	//	Store anything bad in this array. We'll let the user know 
 	//	something bad has come up from it.
