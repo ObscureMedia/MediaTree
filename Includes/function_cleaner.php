@@ -18,7 +18,7 @@
 	 * 
 	 */
 
-	function whiteSpaceTester($value, $delimiter,$tolerance){
+	function delimiterTester($value, $delimiter,$tolerance){
     	//	We could cast the type here, but then we would lose
     	//	out on additional checks.
     	//	This If checks to see whether or not the tolerance
@@ -30,7 +30,7 @@
 			}
 		}
 		$exploder   =   explode($delimiter,$value);
-	    if(count($exploder)>$tolerance){
+	    if(count($exploder)>$tolerance+1){
 	      //  Exploder has found something, return true
 	      //  to say that it has   
 	        return true;
@@ -52,24 +52,32 @@
 	 * More malleability when it comes to user input. 
 	 */
 	
-	function cleaner($value){
-	    $toBeTested   =        trim(strip_tags($value));
-	    
+	function inputCleaner($value){
+	    $toBeTested		=       strip_tags($value,'<script><html><body><div><style>');
 	    //  Instead of using HTMLStripSpecialChars, I am using some Regex
 		//  to have a greater degree of control over the input.
-		//	This regex checks the entire string for any of the symbols
-		//	listed. This will ensure that no escapes can get through 
-		//	and cause an sql injection.
-	    $regExp   = ("/[\!\"\£\$\%\^\&\*\(\)\;\'\"]/");
+		//	This regex checks the entire string for anything that
+		//	could ruin our consistency.
+	    $regExp   = ("/[\!\"\£\$\%\^\&\*\(\)\;\'\,\"\?]/ ");
 	    if(preg_match_all($regExp, $toBeTested,$matches)){
-	      	return true;
+	      	return false;
+		}
+		else{
+			return $toBeTested;
 		}
 	}
 	
+	/**
+	*	What can only be described as 'reinventing the wheel', 
+	*	this function checks if the value is in fact an integer 
+	*	value.
+	*	
+	*	is_numeric does this. 
+	*/
 	
 	function isInteger($value){
 		$regExp =	"/[0-9]/";
-		$toBeTested = $value;
+		$toBeTested = trim($value);
 		$tested= preg_match_all($regExp, $toBeTested,$matches);
 		if(count($matches[0]) != strlen($toBeTested)){
 			return false;

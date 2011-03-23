@@ -26,29 +26,26 @@ include ('includes/function_cleaner.php');
 		
 		//  Trims whitespace from the data, gets rid of any special characters
 		//  that is entered, strips any tags entered into the data.
-		$forename =   trim(strip_tags($_POST['Forename']));
-		$surname  =   trim(strip_tags($_POST['Surname']));
-		$phoneNo  =   trim(strip_tags($_POST['PhoneNum']));
-		
-		//  Instead of using HTMLStripSpecialChars, I am instead using some Regex
-		//  to have a greater degree of control over the input.
-		$regExp   = ("/[\!\"\£\$\%\^\&\*\(\)]/");
-		
-		//Explode the input, which will allow to see if the user has entered any spaces.
-		
-		//if the value posted is empty/null
+		$forename =   inputCleaner($_POST['Forename']);
+		$surname  =   inputCleaner($_POST['Surname']);
+		$phoneNo  =   inputCleaner($_POST['PhoneNum']);
+	
+		//	if the value posted is empty/null
 		if(!$forename){
+			//	When we return to the page, make sure the value is 
+			//	what is was before we entered any data.
 	        $forename 	=	$_SESSION['forename'];
+			//	Make it so that the error gives some sort of identifier.
 	        $error_message['forename_error']	=	"You must enter a forename";
 		}
 		//  Make sure the entry doesn't have any of those nasty characters I 
 		//  mentioned above.
-		if(cleaner($forename)){
+		if(!inputCleaner($forename)){
 			$forename 	=	$_SESSION['forename'];
 			$error_message['forename_error']  = "There was an error with your request, please try again";
 		}
-		
-		if(whiteSpaceTester($forename)){
+		//	If there is any whitespace in the value...
+		if(delimiterTester($forename,' ', 0)){
 		    $forename 	=	$_SESSION['forename'];
 		    $error_message['forename_error']  = "Please enter your forename without any spaces";
 		}
@@ -59,12 +56,12 @@ include ('includes/function_cleaner.php');
 	        $error_message['surname_error']	=	"You must enter a surname";
 		}
 		
-		if(cleaner($surname)){
+		if(!inputCleaner($surname)){
 	        $surname 	=	$_SESSION['surname'];
 	        $error_message['surname_error']  = "There was an error with your request, please try again";
 		}
 		
-		if(whiteSpaceTester($surname)){
+		if(delimiterTester($surname,' ',0)){
 		    $surname 	=	$_SESSION['surname'];
 		    $error_message['surname_error']  = "Please enter your surname without any spaces";
 		}
@@ -75,30 +72,33 @@ include ('includes/function_cleaner.php');
 			$error_message['phoneNo'] = "You must enter a phone number";
 		}
 		
-		if(cleaner($phoneNo)){
+		if(!inputCleaner($phoneNo)){
 			$phoneNo 	=	$_SESSION['phoneNo'];
 			$error_message['phoneNo_Error']  = "There was an error with your request, please try again";
 		}
     
-		if(exploder($phoneNo)){
-        $phoneNo 	=	$_SESSION['phoneNo'];
-        $error_message['phoneNo']  = "Please enter your phone number without any spaces";
+		if(delimiterTester($phoneNo,' ', 0)){
+			$phoneNo 	=	$_SESSION['phoneNo'];
+			$error_message['phoneNo_error']  = "Please enter your phone number without any spaces";
 		}
 		
-		$_SESSION['Error'] = $error_message;
+
 		
-		If(count($_SESSION['Error'])==0){
-        foreach($error_message  as $key){
-          echo $key;
+		If(count($error_message)>0){
+			$_SESSION['Error'] = $error_message;
+			header("location: editCustomer.php?id=$userID");
         }
-        $sqlUpdateQry = "UPDATE USER SET U_FIRST_NAME = '$forename', U_SURNAME= '$surname', U_PHONE_NO= '$phoneNo'  WHERE U_ID = '$userID'";	
-        mysql_query($sqlUpdateQry) or die(mysql_error());
-        $_SESSION['EditConfirm']=True;
+		else{
+			$sqlUpdateQry = "UPDATE USER SET U_FIRST_NAME = '$forename', U_SURNAME= '$surname', U_PHONE_NO= '$phoneNo'  WHERE U_ID = '$userID'";	
+			mysql_query($sqlUpdateQry) or die(mysql_error());
+			$_SESSION['EditConfirm']=True;
+			unset($_SESSION['DeleteConfirm']);
+			//Get rid of these, since we don't need them any more.
+			unset($_SESSION['forename']);
+			unset($_SESSION['surname']);
+			unset($_SESSION['phoneNo']);
+			header("location: CustomerControlPanel.php");
 		}
-		unset($_SESSION['DeleteConfirm']);
-		unset($_SESSION['forename']);
-		unset($_SESSION['surname']);
-		unset($_SESSION['phoneNo']);
 	}
 	
 	//	Get the ID of the post. We will use this later to $_POST back to this page
@@ -130,45 +130,41 @@ include ('includes/function_cleaner.php');
 		}
 	}
 ?>
-			<div id="content">
-				<div id="ContentWrapper">
-					<h1>Edit Details</h1>
-					<?php 
-					//	A dirty little trick. We are POST-ing data, but redirecting to a 
-					//	GET instance of the said page. This allows no silly modifications
-					//	of the database through GET manipulations, and also has the bonus
-					//	of automatically updating the values of the text boxes.
-					?>
-					<form method="post" action="editCustomer.php?id=<?php echo $getter?>">
-						<?php
-							//	Use our session we set earlier to determine if we should inform
-							//	the user that they've changed the data.  
-							if ($_SESSION['EditConfirm']==True){
-								echo "<p>You have successfully updated your details.</p>";
-								unset($_SESSION['EditConfirm']);
-							}
-						?>
-						<?php 
-              if(isset($_SESSION['Error'])){
-            
-                foreach($_SESSION['Error'] as $error){
-                    echo "<div id='error'>$error</div>";
-                 }
-              
-              unset($_SESSION['Error']);
-              }
-						?>
-						<label for="Forename">Forename</label><input type="text" id="Forename" name="Forename" value="<?php echo $_SESSION['forename'];?>"/>
-						<label for="Surname">Surname</label><input type="text" id="Surname" name="Surname" value="<?php echo $_SESSION['surname'];?>"/>
-						<label for="Phone">Phone #</label><input type="text" id="PhoneNum" name="PhoneNum" value="<?php echo $_SESSION['phoneNo'];?>"/>
-						<?php if ($_SESSION['userType']== "admin"){echo "<label for='delete'>Delete User</label> <input type='checkbox' value='true' name='deleteUser'/>";}?>																		
-						<input type="submit" id="update" name="submit"/>
-					</form>		
-				</div>
-			</div>
-			<?php 
-		
+		<div id="content">
+			<div id="ContentWrapper">
+				<h1>Edit Details</h1>
+				<?php 
+				//	A dirty little trick. We are POST-ing data, but redirecting to a 
+				//	GET instance of the said page. This allows no silly modifications
+				//	of the database through GET manipulations, and also has the bonus
+				//	of automatically updating the values of the text boxes.
+				?>
+				<form method="post" action="editCustomer.php?id=<?php echo $getter?>">
 
-?>
+					<?php 
+						if(isset($_SESSION['Error']['forename_error'])){
+							$error = $_SESSION['Error']['forename_error'];
+							echo "<div id='error'>$error</div>";
+							
+						}
+						if(isset($_SESSION['Error']['surname_error'])){
+							$error = $_SESSION['Error']['surname_error'];
+							echo "<div id='error'>$error</div>";
+						}
+						if(isset($_SESSION['Error']['phoneNo_error'])){
+							$error = $_SESSION['Error']['phoneNo_error'];
+							echo "<div id='error'>$error</div>";
+						}
+					?>
+					<label for="Forename">Forename</label><input type="text" id="Forename" name="Forename" value="<?php echo $_SESSION['forename'];?>"/>
+
+					<label for="Surname">Surname</label><input type="text" id="Surname" name="Surname" value="<?php echo $_SESSION['surname'];?>"/>
+
+					<label for="Phone">Phone #</label><input type="text" id="PhoneNum" name="PhoneNum" value="<?php echo $_SESSION['phoneNo'];?>"/>
+					<?php if ($_SESSION['userType']== "admin"){echo "<label for='delete'>Delete User</label> <input type='checkbox' value='true' name='deleteUser'/>";}?>																		
+					<input type="submit" id="update" name="submit"/>
+				</form>		
+			</div>
+		</div>
 	</body>
 </html>
