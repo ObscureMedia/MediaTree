@@ -1,4 +1,5 @@
 <?php
-mysql_connect ('dec20', 'group18', 'able7prime7') ;
+Session_Start();
+mysql_connect ('localhost', 'root', '') ;
 mysql_select_db ('group18');
 ?>
