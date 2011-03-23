@@ -2,8 +2,6 @@
 include ('mysql_connect.php');
 include ('includes/function_cleaner.php');
 	 
-
-	
 	//	Store anything bad in this array. We'll let the user know 
 	//	something bad has come up from it.
 	$error_message	=	array();
@@ -45,12 +43,12 @@ include ('includes/function_cleaner.php');
 		}
 		//  Make sure the entry doesn't have any of those nasty characters I 
 		//  mentioned above.
-		if(preg_match_all($regExp, $forename,$matches)){
+		if(cleaner($forename)){
 			$forename 	=	$_SESSION['forename'];
 			$error_message['forename_error']  = "There was an error with your request, please try again";
 		}
 		
-		if(exploder($forename)){
+		if(whiteSpaceTester($forename)){
 		    $forename 	=	$_SESSION['forename'];
 		    $error_message['forename_error']  = "Please enter your forename without any spaces";
 		}
@@ -61,12 +59,12 @@ include ('includes/function_cleaner.php');
 	        $error_message['surname_error']	=	"You must enter a surname";
 		}
 		
-		if(preg_match_all($regExp, $surname,$matches)){
+		if(cleaner($surname)){
 	        $surname 	=	$_SESSION['surname'];
 	        $error_message['surname_error']  = "There was an error with your request, please try again";
 		}
 		
-		if(exploder($surname)){
+		if(whiteSpaceTester($surname)){
 		    $surname 	=	$_SESSION['surname'];
 		    $error_message['surname_error']  = "Please enter your surname without any spaces";
 		}
@@ -77,9 +75,9 @@ include ('includes/function_cleaner.php');
 			$error_message['phoneNo'] = "You must enter a phone number";
 		}
 		
-		if(preg_match_all($regExp, $phoneNo,$matches)){
-      $phoneNo 	=	$_SESSION['phoneNo'];
-      $error_message['phoneNo_Error']  = "There was an error with your request, please try again";
+		if(cleaner($phoneNo)){
+			$phoneNo 	=	$_SESSION['phoneNo'];
+			$error_message['phoneNo_Error']  = "There was an error with your request, please try again";
 		}
     
 		if(exploder($phoneNo)){
@@ -97,16 +95,17 @@ include ('includes/function_cleaner.php');
         mysql_query($sqlUpdateQry) or die(mysql_error());
         $_SESSION['EditConfirm']=True;
 		}
-		unset($_SESSION['EditConfirm']);
 		unset($_SESSION['DeleteConfirm']);
 		unset($_SESSION['forename']);
 		unset($_SESSION['surname']);
 		unset($_SESSION['phoneNo']);
 	}
-	 
-	if(isset($_GET['id'])){
 	
-		//Get the ID of the post. We will use this later to $_POST back to this page
+	//	Get the ID of the post. We will use this later to $_POST back to this page
+	if(isset($_GET['id'])){
+		//	If it's set, then check if someone has inserted any bad 
+		//	values into the ID.
+		if(is_numeric($_GET['id'])){
 		
 		//	Get the data from the database. Pull only one, since we
 		//	only need one. The query is limited for some rudimentary
@@ -125,6 +124,11 @@ include ('includes/function_cleaner.php');
 		$_SESSION['surname']  =   $row['U_SURNAME'];
 		$_SESSION['phoneNo']  =   $row['U_PHONE_NO'];
 		}
+		else{
+		
+			header("location: 404.php");
+		}
+	}
 ?>
 			<div id="content">
 				<div id="ContentWrapper">
@@ -140,10 +144,10 @@ include ('includes/function_cleaner.php');
 							//	Use our session we set earlier to determine if we should inform
 							//	the user that they've changed the data.  
 							if ($_SESSION['EditConfirm']==True){
-						
-							echo "<p>You have successfully updated your details.</p>";
-						
-						}?>
+								echo "<p>You have successfully updated your details.</p>";
+								unset($_SESSION['EditConfirm']);
+							}
+						?>
 						<?php 
               if(isset($_SESSION['Error'])){
             
