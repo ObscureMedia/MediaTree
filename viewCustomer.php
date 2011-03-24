@@ -62,8 +62,9 @@ include ('includes/function_cleaner.php');
 				if(isset($_POST['range'])){
 					
 					$error_message = array();
-					$range = $_POST['range'];
-					
+					$range 	= $_POST['range'];
+					$email	= $_POST['email'];
+					$phoneNo	= $_POST['phoneNo'];
 					if(!$getData){
 						$_SESSION['userQuery'] = false;
 					}
@@ -101,24 +102,13 @@ include ('includes/function_cleaner.php');
 						if(delimiterTester($range,' ',0)){
 							$error_message['rangeInput']	=	"Please insert a range without any spaces";
 						}
-						
-						// ERROR CHECKING ON NAMES AND ADDRESSES
-						
+												
 						if(count($error_message)>0){
 							unset($_SESSION['Error']);
 							$_SESSION['Error'] = $error_message;
 							header("location: viewCustomer.php");
 						}
 						else{
-							$tableData =  "<code> <table>
-									<tr>
-										<th>User ID</th>
-										<th>User Email<th>
-										<th>Forename</th>
-										<th>Surname</th>
-										<th>Phone Number</th>
-										<th>User Type</th>
-									</tr>";	
 							if($range > 0){
 								$viewCustomerQry = "SELECT * FROM user 
 													WHERE U_ID BETWEEN '$getData' AND '$range' 
@@ -130,27 +120,49 @@ include ('includes/function_cleaner.php');
 													WHERE U_ID = '$getData'";
 								$result = mysql_query($viewCustomerQry) or die( mysql_error());
 							}
-													echo $tableData;
-							while($row = mysql_fetch_array($result)){
-							?>
-								<tr>
-									<td><a href="EditCustomer.php?id=<?php echo $row['U_ID'];?>"><?php echo $row['U_ID']?></a></td>
-									<td><?php echo $row["U_EMAIL_ADDRESS"]?></td>
-									<td><?php echo $row["U_FIRST_NAME"]?></td>
-									<td><?php echo $row["U_SURNAME"]?></td>
-									<td><?php echo $row["U_PHONE_NO"]?></td>
-									<td><?php echo $row["U_TYPE"]?></td>
-								</tr>
-							<?php 
-							}
-							echo"</table>";
 						}
 					}
 				
-				
-				
+					if(!email){
+						$_SESSION['emailQuery'] = false;
+					}
+					else{
+						$_SESSION['emailQuery'] = true;
+					}
+					
+					if($_SESSION['emailQuery'] == true){
+						//insert email validation here
+					}
+					
+					
+					
+					//after everything, echo the data.
+					$tableData =  "<code> <table>
+									<tr>
+										<th>User ID</th>
+										<th>User Email<th>
+										<th>Forename</th>
+										<th>Surname</th>
+										<th>Phone Number</th>
+										<th>User Type</th>
+									</tr>";	
+					echo $tableData;
+					while($row = mysql_fetch_array($result)){
+					?>
+						<tr>
+							<td><a href="EditCustomer.php?id=<?php echo $row['U_ID'];?>"><?php echo $row['U_ID']?></a></td>
+							<td><?php echo $row["U_EMAIL_ADDRESS"]?></td>
+							<td><?php echo $row["U_FIRST_NAME"]?></td>
+							<td><?php echo $row["U_SURNAME"]?></td>
+							<td><?php echo $row["U_PHONE_NO"]?></td>
+							<td><?php echo $row["U_TYPE"]?></td>
+						</tr>
+					<?php 
+					}
+					echo"</table>";
 				}
 			}	
+
 		?>
 	</div>
 </div>
