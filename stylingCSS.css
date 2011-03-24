@@ -170,6 +170,10 @@ color: #cd88d8;
 	float:right;
 }
 
+#subMenu{
+	float:left;	
+}
+
 #subMenu .submenu, #subMenu .header, #subMenu .submenuholder, #subMenu .submenuitem{
 	margin:0px;
 	padding:0px;
@@ -191,7 +195,7 @@ color: #cd88d8;
 #subMenu .submenuholder {
 	display:none;
 	position:absolute;
-	left:100px;
+	left:191px;
 	top:50px;
 	width:100px;
 }
@@ -231,6 +235,30 @@ color: #cd88d8;
 	border-bottom-left-radius: 15px;
 	-moz-border-radius-bottomright: 15px;
 	-moz-border-radius-bottomleft: 15px;
+}
+
+#Browse p{
+	padding-left:25px;
+}
+
+.eachresult{
+	width:200px;
+	padding:30px;
+}
+
+.eachresult .ID {
+	color:#000000;
+	text-align:center;
+}
+
+.eachresult .NAME {
+	color:#11BBCC;
+	text-align:center;
+}
+
+.eachresult .PRICE {
+	color:#777777;
+	text-align:center;
 }
 
 #subMenu{

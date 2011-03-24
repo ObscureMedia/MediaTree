@@ -36,7 +36,7 @@
 	        return true;
 	    }
 	    //else, return false.
-	    return false;
+	    return false; 
 	}
 	/**
 	 * A method which cleans the values inputted to it, 
@@ -51,9 +51,9 @@
 	 * @todo
 	 * More malleability when it comes to user input. 
 	 */
-	
+	 
 	function inputCleaner($value){
-	    $toBeTested		=       strip_tags($value,'<script><html><body><div><style>');
+	    $toBeTested		=       strip_tags($value);
 	    //  Instead of using HTMLStripSpecialChars, I am using some Regex
 		//  to have a greater degree of control over the input.
 		//	This regex checks the entire string for anything that

@@ -14,7 +14,7 @@ function deepcompare($value1, $value2)
     }
 }	
 	// An array holding the details of how the attributes are stored in the database. Keys are how the data should be refered too in the HTML and their values are column names within the database. This reduces the code required to output this information as foreach loops can be used
-	$attributes = array("Title" =>'P_NAME',"Artist" =>'P_ARTIST',"Media" =>'P_TYPE',"Genre" =>'P_GENRE',"Release Date" =>'P_RELEASE_DATE',"IMGURL" =>'P_IMG_REF');
+	$attributes = array("Title" =>'P_NAME',"Artist" =>'P_ARTIST',"Media" =>'P_TYPE',"Genre" =>'P_GENRE',"Release Date" =>'P_RELEASE_DATE');
 	//Include the code found in ConnectAndSelect.php, this will connect to the server and select the database for use.
 	include_once "ConnectAndSelect.php";
 	//Get the current system time to be used in determining how long a search takes.

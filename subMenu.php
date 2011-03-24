@@ -3,7 +3,7 @@ $page =$_GET['page'];
 foreach(range('A', 'Z') as $letter) {
     $atoz[] =$letter;
 }
-$headings = array("Music Genre" => array("Rock", "Pop", "Dance", "Trance", "Rap", "Live"), "DVD Genre" => array("Horror", "Comedy", "Action", "Live", "TV-box set"), "AZ" => $atoz, "Price" => array("Under £5", "£5-10", "£10-£20", "£20+"));
+$headings = array("Music Genre" => array("Rock", "Pop", "Dance", "Trance", "Rap", "Live"), "DVD Genre" => array("Horror", "Comedy", "Action", "Live", "TV"), "AZ" => $atoz, "Price" => array("Under £5" => 5, "£5-10" => 10, "£10-£15" => 15, "£15+" => 20));
 echo "<div id=\"subMenu\">
 	<ul class = \"submenubar\">
 		<li class=\"header\">",$page,"</li>";
@@ -41,8 +41,13 @@ echo "<div id=\"subMenu\">
 				echo array_search($eachheading, $headings);
 				echo "<ul class= \"submenuholder\">";
 				foreach ($eachheading as $eachsubheading){
-					echo   "<li class=\"submenuitem\">";			
+					echo   "<li class=\"submenuitem\">";
+					if ($eachheading == $headings['Price']){
+						echo "<a href=",$_SERVER['PHP_SELF'],"?page=",$page,"&Subcat=",$eachsubheading,">",array_search($eachsubheading,$eachheading), "</a>";					
+					}			
+					else {
 					echo "<a href=",$_SERVER['PHP_SELF'],"?page=",$page,"&Subcat=",$eachsubheading,">",$eachsubheading, "</a>";
+					}
 					echo "<br>";
 					echo    "</li>";	
 				}	
@@ -50,8 +55,6 @@ echo "<div id=\"subMenu\">
 			echo "</li>";
 			}
 		}
-
-
 
 echo "</ul>
 </div>";

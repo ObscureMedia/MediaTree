@@ -7,9 +7,9 @@
  *  @version	0.90
  */
 //search by: postcode, address, email, name, phonenumber/
-include ('mysql_connect.php');
-include ('includes/function_cleaner.php');
-
+require_once ('ConnectAndSelect.php');
+include ("Includes/function_cleaner.php");
+include ("Includes/validation.php");
 
 
 ?>
@@ -18,6 +18,23 @@ include ('includes/function_cleaner.php');
 <div id="content">
 	<div id="ContentWrapper">
 		<h1>View Customers</h1>
+		<?php
+			//	Use our session we set earlier to determine if we should inform
+			//	the user that they've changed the data.  
+			if ($_SESSION['EditConfirm']==True){
+				echo "<p id = 'error'>You have successfully updated your details.</p>";
+				unset($_SESSION['EditConfirm']);
+			}
+			if ($_SESSION['DeleteConfirm'] == True){
+				echo "<p id='error'>You have successfully deleted this user.</p>";
+				unset($_SESSION['DeleteConfirm']);
+			}
+			if ($_SESSION['NotFound']	== True){
+				echo "<p id='error'>The user ID cannot be found.</p>";
+				unset($_SESSION['NotFound']);
+			}
+		?>
+		
 		<?php
 			if(isset($_SESSION['Error'])){
 				$error = $_SESSION['Error'];
@@ -62,9 +79,12 @@ include ('includes/function_cleaner.php');
 				if(isset($_POST['range'])){
 					
 					$error_message = array();
-					$range 	= $_POST['range'];
-					$email	= $_POST['email'];
-					$phoneNo	= $_POST['phoneNo'];
+					
+					$range 		= inputCleaner($_POST['range']);
+					$email		= inputCleaner($_POST['email']);
+					$phoneNo	= inputCleaner($_POST['phoneNo']);
+					
+					
 					if(!$getData){
 						$_SESSION['userQuery'] = false;
 					}
@@ -110,7 +130,7 @@ include ('includes/function_cleaner.php');
 						}
 						else{
 							if($range > 0){
-								$viewCustomerQry = "SELECT * FROM user 
+								$viewCustomerQry = "SELECT * FROM USER 
 													WHERE U_ID BETWEEN '$getData' AND '$range' 
 													LIMIT 100";
 								$result = mysql_query($viewCustomerQry) or die( mysql_error());
@@ -123,7 +143,7 @@ include ('includes/function_cleaner.php');
 						}
 					}
 				
-					if(!email){
+					if(!$email){
 						$_SESSION['emailQuery'] = false;
 					}
 					else{
@@ -132,6 +152,13 @@ include ('includes/function_cleaner.php');
 					
 					if($_SESSION['emailQuery'] == true){
 						//insert email validation here
+						
+						//If no email is entered
+						if(!email){
+							$error_message['emailInput'] =	"Please enter a valid number";	
+						}
+						
+						
 					}
 					
 					
@@ -150,19 +177,21 @@ include ('includes/function_cleaner.php');
 					while($row = mysql_fetch_array($result)){
 					?>
 						<tr>
-							<td><a href="EditCustomer.php?id=<?php echo $row['U_ID'];?>"><?php echo $row['U_ID']?></a></td>
-							<td><?php echo $row["U_EMAIL_ADDRESS"]?></td>
-							<td><?php echo $row["U_FIRST_NAME"]?></td>
-							<td><?php echo $row["U_SURNAME"]?></td>
-							<td><?php echo $row["U_PHONE_NO"]?></td>
-							<td><?php echo $row["U_TYPE"]?></td>
+							<td><a href="editCustomer.php?id=<?php echo $row['U_ID'];?>"><?php echo $row['U_ID']?></a></td>
+							<td><?php echo inputCleaner($row["U_EMAIL_ADDRESS"])?></td>
+							<td><?php echo inputCleaner($row["U_FIRST_NAME"])?></td>
+							<td><?php echo inputCleaner($row["U_SURNAME"])?></td>
+							<td><?php echo inputCleaner($row["U_PHONE_NO"])?></td>
+							<td><?php echo inputCleaner($row["U_TYPE"])?></td>
 						</tr>
 					<?php 
 					}
 					echo"</table>";
 				}
-			}	
-
-		?>
+			}
+			echo 5 / 1;
+			?>
+	
+			
 	</div>
 </div>

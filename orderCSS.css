@@ -1,0 +1,29 @@
+
+div.price
+{
+	float:right;
+
+}
+div.delivery
+{
+	float:top;
+}
+
+table.order
+{
+  width: 90% ;
+  margin-left: auto ;
+  margin-right: auto ;
+  -moz-border-radius: 15px;
+}
+td
+{
+	padding:10px;
+-moz-border-radius: 15px;
+}
+th
+{
+-moz-border-radius: 15px;	
+}
+	
+}
