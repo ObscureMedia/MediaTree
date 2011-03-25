@@ -4,10 +4,10 @@ if(!isset($_SESSION))
 {
 session_start();
 }
-switch ($_POST['changeAddress']) {
-      case 'Edit Address':
-      	$_SESSION['Address_Number'] = $_POST['Address'];
-      		include'EditAddress.php';
+switch ($_POST['changeCard']) {
+      case 'Edit Card':
+      	$_SESSION['Card_Number'] = $_POST['card'];
+      		include'EditCard.php';
 		break;
    
       case 'Delete Address':

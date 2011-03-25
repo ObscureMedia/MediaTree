@@ -160,9 +160,7 @@ include ("Includes/validation.php");
 						
 						
 					}
-					
-					
-					
+
 					//after everything, echo the data.
 					$tableData =  "<code> <table>
 									<tr>
@@ -189,7 +187,7 @@ include ("Includes/validation.php");
 					echo"</table>";
 				}
 			}
-			echo 5 / 1;
+			mysql_close();
 			?>
 	
 			

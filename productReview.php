@@ -1,100 +1,133 @@
 <?php 
-include('mysql_connect.php');
+Session_Start();
+include ('ConnectAndSelect.php');
+include ("Includes/starGen.php");
 ?>
 
 <div id="CommentBox">
 	<div id="CommentWrap">
 		<?php 
+			
+			if(isset($_GET['vote']) && isset($_GET['reviewID'])){
+				$vote = $_GET['vote'];
+				$reviewID = $_GET['reviewID'];
+				if($_SESSION['voteTruth'] == false || !isset($_SESSION['voteTruth'])){
+				
+					if($vote == 1){
+						$update = "UPDATE PRODUCT_REVIEW 
+							SET U_REVIEW_RATING_POS = U_REVIEW_RATING_POS  + 1
+							WHERE P_ID = $id
+							AND U_ID = $reviewID
+							";
+							mysql_query($update) or die(mysql_error());			
+							unset($_GET['vote']);				
+							header("location: productpages_hopgood.php?id=$id");
+						
+					}
+					elseif($vote == -1){
+						$update= "UPDATE PRODUCT_REVIEW 
+							SET U_REVIEW_RATING_NEG = U_REVIEW_RATING_NEG + 1
+							WHERE P_ID = $id
+							AND U_ID = $reviewID
+							";
+							mysql_query($update) or die(mysql_error());		
+							unset($_GET['vote']);
+							unset($_GET['reviewID']);						
+							header("location: productpages_hopgood.php?id=$id");
+					}
+					else{
+						//blankity blank! Nothing happens.
+						header("location: productpages_hopgood.php?id=$id");
+					}
+				}
+				$_SESSION['voteTruth'] = true;
+			}
+			
 			//Get comment data from the database. Pull 100 and paginate from there.
 			$from 	=	0;
 			$to 	=	100;
 			$commentQry = "SELECT USER.U_ID, USER.U_FIRST_NAME, USER.U_SURNAME, USER.U_EMAIL_ADDRESS,
-						PRODUCT_REVIEW.U_P_RATING, PRODUCT_REVIEW.U_P_TITLE, PRODUCT_REVIEW.U_P_REVIEW, PRODUCT_REVIEW.P_ID, PRODUCT_REVIEW.U_ID
+						PRODUCT_REVIEW.U_P_RATING, PRODUCT_REVIEW.U_P_TITLE, PRODUCT_REVIEW.U_P_REVIEW, PRODUCT_REVIEW.P_ID, PRODUCT_REVIEW.U_ID, 
+						U_REVIEW_RATING_POS,
+						U_REVIEW_RATING_POS + U_REVIEW_RATING_NEG U_REVIEW_TOTAL, U_REVIEW_RATING_POS - U_REVIEW_RATING_NEG TOP_REVIEWS
 						FROM PRODUCT_REVIEW, USER
 						WHERE USER.U_ID = PRODUCT_REVIEW.U_ID
-						AND PRODUCT_REVIEW.P_ID = '43'
+						AND PRODUCT_REVIEW.P_ID = '$id'
+						ORDER BY U_REVIEW_RATING_POS DESC,U_REVIEW_TOTAL DESC
 						";
+			//get an average for the total reviews.
+			$ratingQry	= "SELECT AVG(U_P_RATING)
+							FROM PRODUCT_REVIEW
+							WHERE P_ID = $id";
+			
 			
 			//$totalCommentQry:	qry the total amount of reviews for this one project. will need to join the tables to do this.
+			$result = mysql_query($ratingQry);
+			$row = mysql_fetch_array($result,MYSQL_NUM);
+			$avgReview = starGen($row[0]);
+			?>
 			
+			<table>
+				<th>Customer Reviews<th>
+				<tr>
+					<td>Average Customer Reviews: <span title="<?php echo $row[0] . ' out of 5 stars'?>"><?php echo $avgReview?></span>
+				</tr>
+			</table>
+			
+		<?php 				
 			$result = mysql_query($commentQry);
+			while($row = mysql_fetch_array($result,MYSQL_BOTH)){ 
+				
+				$userID 	= $row['U_ID'];
+				$forename 	= $row[1];
+				$surname 	= $row[2];
+				$rating 	= $row[4];
+				$title 		= $row[5];
+				$review 	= $row[6];
+				$reviewPos	= $row[9];
+				$reviewTotal= $row['U_REVIEW_TOTAL'];
+				$score = '';
+				$average  = array();
+				array_push($average,$rating);
+				//Get the user rating, count it down.
+				$score = starGen($rating);
 
 			?>
-				<?php 	
-				
-					while($row = mysql_fetch_array($result,MYSQL_NUM)){ 
-						
-						$userID 	= $row[0];
-						$forename 	= $row[1];
-						$surname 	= $row[2];
-						$rating 	= $row[4];
-						$title 		= $row[5];
-						$review 	= $row[6];
-						$tlt = '';
-						
-						//Get the user rating, count it down.
-						$starRating = array(
-							1 => "<img src='Content/stars/starFull.png'/>", 
-							0.9 => "<img src='Content/stars/0.9.png'/>",
-							0.8 => "<img src='Content/stars/0.8.png'/>",
-							0.7 => "<img src='Content/stars/0.7.png'/>",
-							0.6 => "<img src='Content/stars/0.6.png'/>", 
-							0.5 => "<img src='Content/stars/0.5.png'/>",
-							0.4 => "<img src='Content/stars/0.4.png'/>", 
-							0.3 => "<img src='Content/stars/0.3.png'/>",
-							0.2 => "<img src='Content/stars/0.2.png'/>",
-							0.1 => "<img src='Content/stars/0.1.png'/>",
-						);
-					
-						$retainer = 1;
-						foreach($starRating as $imgRate => $img){
-							//multiply the rating by 5
-							//retain = dividing the rating by the amount of numbers we have 
-							//if the number we have left is greater than 0
-								//repeat the image ref by the retaining / 5
-							//modulus divide 
-							if($retainer >0){
-								$retainer = $rating / $imgRate*10;
-								
-								$tlt .= str_repeat($img, $retainer/10);
-								if($rating % ($imgRate) == 0){
-									break;
-								}
-								else{
-									$rating %= ($imgRate);
-								}
-							}
-						}
-
-						
-					?>
-					<table>
-						<th><b><?php echo $title ?>
-						
-						
-						</b> by <a href="customerReview.php?id=<?php echo $userID; ?>">
-						
-						<?php echo $forename." ".$surname; ?></a></th>				
-						
-						
-						<tr>
-							<td><?php echo $tlt; ?></td>
-						</tr>
-						<tr>
-							<td><?php echo $review; ?> </td>
-						</tr>   
-					</table>
-				<?php						
-						}
-					?>
-					
-			<?php
-			//comment title
-			//user who posted + links 
-			//Date posted.
-			//show a link to other reviews that were posted by same user
-			//Show comment
-			//permalink to the comment.
-		?>
+			<table>
+				<?php 
+					if($reviewTotal >0){
+						echo $reviewPos . " out of " . $reviewTotal ." people found this review helpful";
+					}
+				// ?>
+				<tr>
+					<td><span title="<?php echo $rating?> out of <?php echo $rating;?> stars" ><?php echo $score; ?></span> &nbsp;<b><?php echo $title ?>	</b> by <a href="customerReview.php?id=<?php echo $userID; ?>"> <?php echo $forename." ".$surname; ?></a></td>				
+				<tr>
+					<td></td>
+				</tr>
+				<tr>
+					<td><?php echo $review; ?> </td>
+				</tr>   
+				<tr>
+					<td>Did you find this review helpful? 
+					<span><a href="productpages_hopgood.php?id=<?php echo $id ?>&vote=1&reviewID=<?php echo $userID ?>"> <input type="button" value="Yes" align="right"/></a> 
+					<span><a href="productpages_hopgood.php?id=<?php echo $id ?>&vote=-1&reviewID=<?php echo $userID ?>"><input type="button" value="No" align="right"/></a></span>
+					</td>
+				</tr>				
+			</table>
+			<br/>
+			<br/>
+		<?php						
+				}
+				mysql_close();
+			?>
+			
+	<?php
+	//comment title
+	//user who posted + links 
+	//Date posted.
+	//show a link to other reviews that were posted by same user
+	//Show comment
+	//permalink to the comment.
+	?>
 	</div>
 </div>

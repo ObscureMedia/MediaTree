@@ -66,10 +66,12 @@ function deepcompare($value1, $value2)
 				usort($rankedresults, 'deepcompare');
 				//for each result returned
 				foreach ($rankedresults as $eachresult){
+					echo "<div class =\"SearchResult\">";
 					//for each attribute that a result possesses (drawn from the attribute array declared above)
+					echo "<div class =\"ProductImage\"><img src=\"Images/",$eachresult['P_ID'],".PNG\" width=\"150px\"></div>";
 					foreach ($attributes as $eachattribute){
 						//place each attribute within it's own div for the sake of CSS formatting
-						echo "<div class=\"$eachattribute\">";
+						echo "<div class=\"",substr($eachattribute,2),"\">";
 						//find the if the searched term occours within the attribute, if so, store the first occurrence of it in the variable $pos
 						$pos = strpos(strtolower($eachresult[$eachattribute]), strtolower($search));
 						//output what the current attribute is, followed by a colon. "Title:" or "Artist:" for example
@@ -84,6 +86,7 @@ function deepcompare($value1, $value2)
 							//split the attribute into "chunks" on either side of a case-insenitive occurrence of the search value. The split string is then stored in an array named $containssearch.
 							$containssearch = preg_split("/$search/i", $eachresult[$eachattribute]);
 							//for each chunk
+							echo "<p class =\"value\">";
 							foreach($containssearch as $chunks){	
 								//output the chunk
 								echo $chunks;	
@@ -96,17 +99,20 @@ function deepcompare($value1, $value2)
 							//As preg_split does not store the searched value in its returned array, exact matches to the search value return an empty array, in addition, this does not meet the above if statement and therefore the searched value is not outputted
 							//To combat we check to see if there is an exact match between searched and the attribute. if so, searched is outputted with bold markup 
 							if(strtolower($eachresult[$eachattribute]) == strtolower($search)){
+								echo "<p class =\"value\">";
 								echo "<b>$search</b>";	
-							}
-							//A final linebreak for reading clairty
-							echo "<br>";
+							}	
+							echo "</p>";
 						}
-					//close the div
-					echo "</div>";
+						echo "</div>";
 					}
+					
 				//A horrizontal line is drawn between results
+				echo "<div class = \"spacer\">";
 				echo "<hr>";						
-				}
+				echo "</div>";	
+				echo "</div>";	
+				}	
 			}
 			//If ranked results is not set (and therefore no results were found) alert the user	
 			else{
@@ -119,5 +125,5 @@ function deepcompare($value1, $value2)
 		//calculate the time it took to perform the query by subtracting the time at the begining of the query from the time at its end
 		$timetaken = number_format($timeend - $timestart, 3);
 		//output the time it took to perform the query	
-		echo "<p id=\"timetaken,\"> Query took ", $timetaken, " seconds to return results."
+		echo "<p id=\"timetaken\"> Query took ", $timetaken, " seconds to return results.</p>"
 ?>

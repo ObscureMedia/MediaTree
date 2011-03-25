@@ -7,6 +7,10 @@ $headings = array("Music Genre" => array("Rock", "Pop", "Dance", "Trance", "Rap"
 echo "<div id=\"subMenu\">
 	<ul class = \"submenubar\">
 		<li class=\"header\">",$page,"</li>";
+		echo   "<li class=\"submenu\">";
+		echo "<a href=",$_SERVER['PHP_SELF'],"?page=",$page,"&Subcat=ALL","&resultspage=1",">All</a>";
+		echo "<br>";
+		echo "</li>";		
 		foreach($headings as $eachheading){
 			if ($eachheading == $headings["Music Genre"]){	
 				if($page == "DVD"){
@@ -15,7 +19,7 @@ echo "<div id=\"subMenu\">
 					echo "<ul class= \"submenuholder\">";
 					foreach($headings['DVD Genre'] as $DvdGenre){
 						echo   "<li class=\"submenuitem\">";			
-						echo "<a href=",$_SERVER['PHP_SELF'],"?page=",$page,"&Subcat=",$DvdGenre,">",$DvdGenre,"</a>";
+						echo "<a href=",$_SERVER['PHP_SELF'],"?page=",$page,"&Subcat=",$DvdGenre,"&resultspage=1",">",$DvdGenre,"</a>";
 						echo "<br>";	
 						echo    "</li>";
 					}
@@ -28,7 +32,7 @@ echo "<div id=\"subMenu\">
 					echo "<ul class= \"submenuholder\">";
 					foreach ($headings['Music Genre'] as $MusicGenre){
 						echo   "<li class=\"submenuitem\">";
-						echo "<a href=",$_SERVER['PHP_SELF'],"?page=",$page,"&Subcat=",$MusicGenre,">",$MusicGenre, "</a>";
+						echo "<a href=",$_SERVER['PHP_SELF'],"?page=",$page,"&Subcat=",$MusicGenre,"&resultspage=1",">",$MusicGenre, "</a>";
 						echo "<br>";
 						echo    "</li>";
 					}
@@ -43,10 +47,10 @@ echo "<div id=\"subMenu\">
 				foreach ($eachheading as $eachsubheading){
 					echo   "<li class=\"submenuitem\">";
 					if ($eachheading == $headings['Price']){
-						echo "<a href=",$_SERVER['PHP_SELF'],"?page=",$page,"&Subcat=",$eachsubheading,">",array_search($eachsubheading,$eachheading), "</a>";					
+						echo "<a href=",$_SERVER['PHP_SELF'],"?page=",$page,"&Subcat=",$eachsubheading,"&resultspage=1",">",array_search($eachsubheading,$eachheading), "</a>";					
 					}			
 					else {
-					echo "<a href=",$_SERVER['PHP_SELF'],"?page=",$page,"&Subcat=",$eachsubheading,">",$eachsubheading, "</a>";
+					echo "<a href=",$_SERVER['PHP_SELF'],"?page=",$page,"&Subcat=",$eachsubheading,"&resultspage=1",">",$eachsubheading, "</a>";
 					}
 					echo "<br>";
 					echo    "</li>";	

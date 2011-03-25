@@ -83,7 +83,7 @@ color: #cd88d8;
 }
 
 #topnav form {
-	background-color:efbef7;
+	background-color:#efbef7;
 	padding-bottom:7px;
 	margin-left:380px;
 	padding-left:10px;
@@ -237,8 +237,32 @@ color: #cd88d8;
 	-moz-border-radius-bottomleft: 15px;
 }
 
+.SearchResult .attribute{	
+	width:100px;
+}
+
+.SearchResult .value{
+	color:#444444;
+	width:100px;
+}
+
+.SearchResult .NAME, .SearchResult .ARTIST, .SearchResult .TYPE, .SearchResult .GENRE, .SearchResult .RELEASE_DATE{
+ 		color:#23D278;
+ 		width:100px;
+}
+
+.spacer{
+	width:1024px;	
+}
+
+#timetaken{
+	display:block;	
+}
+
+
 #Browse p{
-	padding-left:25px;
+	padding-left:200px;
+	
 }
 
 .eachresult{
@@ -246,19 +270,49 @@ color: #cd88d8;
 	padding:30px;
 }
 
-.eachresult .ID {
-	color:#000000;
+.eachresult .ID, .eachresult .NAME, .eachresult .ARTIST, .eachresult .PRICE {
 	text-align:center;
+	font-size:16px;
+	font-family: HelveticaRounded, sans-serif;
 }
 
 .eachresult .NAME {
-	color:#11BBCC;
-	text-align:center;
+	color:#000000;
 }
 
+.eachresult .ARTIST {
+	color:#8d279f;
+}
 .eachresult .PRICE {
-	color:#777777;
+	color:#8d279f;
+}
+
+#Browse .links{
 	text-align:center;
+	border-bottom-right-radius: 15px;
+	border-bottom-left-radius: 15px;
+	-moz-border-radius-bottomright: 15px;
+	-moz-border-radius-bottomleft: 15px;
+	
+}
+
+#Browse .pagination, #Browse .pageinationcurrent {
+	font-family: HelveticaRounded, sans-serif;
+	color:#ffffff;
+	text-decoration:none;
+	padding-top:5px;
+	padding-bottom:5px;
+	padding-left:7px;
+	padding-right:7px;
+}	
+
+#Browse .pagination{
+	background-color:#6b157c;	
+}
+
+#Browse .pageinationcurrent{
+	background-color:#cd88d8;
+	border:1px solid #FFFFFF;
 }
 
 #subMenu{
